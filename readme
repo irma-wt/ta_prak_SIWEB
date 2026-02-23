@@ -1,0 +1,33 @@
+Website ini merupakan sistem informasi berbasis web yang dirancang untuk membantu pengelolaan data produk aksesoris secara sederhana tanpa menggunakan database. Seluruh data produk dan gambar ditampilkan secara statis melalui struktur HTML, dengan dukungan Bootstrap 5 untuk memastikan tampilan responsif dan modern.
+
+Secara struktur, halaman ini menggunakan standar HTML5 dengan konfigurasi meta viewport agar dapat menyesuaikan tampilan di berbagai perangkat. Bootstrap 5 dan Bootstrap Icons diimpor melalui CDN untuk mempermudah penggunaan komponen siap pakai seperti grid system, navbar, card, form, serta ikon dekoratif. Styling tambahan ditempatkan pada file CSS eksternal (css/style.css) sehingga struktur kode tetap rapi dan terpisah antara struktur dan desain.
+
+Bagian pertama adalah Navbar. Navbar menggunakan komponen Bootstrap dengan kelas navbar-expand-lg dan sticky-top sehingga tetap terlihat saat halaman digulir. Navbar memuat identitas sistem berupa ikon permata dan nama “TokoAksesoris”, serta tiga menu navigasi internal yang mengarah ke section Beranda, Kelola Aksesoris, dan Statistik. Pada perangkat mobile, menu berubah menjadi tombol hamburger melalui fitur collapse Bootstrap.
+
+Setelah navbar, terdapat Hero Section yang berfungsi sebagai header utama sistem. Bagian ini memperkenalkan sistem melalui judul besar “Sistem Pengelolaan Toko Aksesoris”, deskripsi singkat mengenai fungsi sistem, serta dua tombol Call to Action yang mengarahkan pengguna ke bagian form dan daftar produk. Tata letak hero dibuat terpusat (text-center) dan menggunakan elemen visual berupa ikon untuk memperkuat identitas tema aksesoris.
+
+Section berikutnya adalah Produk dan Statistik. Pada bagian ini digunakan Bootstrap Grid untuk membuat tampilan responsif dengan pembagian kolom yang menyesuaikan ukuran layar. Terdapat tiga card produk yang masing-masing berisi gambar statis dari folder assets (antingmutiara.jpg, cincin.jpg, dan gelang.jpg), nama produk, deskripsi, harga, stok, serta rating berbentuk ikon bintang. Struktur card dibuat konsisten dengan pembungkus gambar agar tinggi gambar seragam. Selain itu, terdapat tiga kotak ringkasan statistik mini yang menampilkan total produk, total stok unit, dan jumlah kategori sebagai representasi data manajemen inventori.
+
+Bagian selanjutnya adalah Form Input Data Aksesoris. Form ini memenuhi ketentuan minimal empat field input, yaitu nama aksesoris, harga jual, jumlah stok, dan kategori produk. Ditambahkan pula field deskripsi sebagai nilai tambah. Setiap input menggunakan validasi HTML5 dengan atribut required, min, dan step untuk memastikan data yang dimasukkan sesuai ketentuan. Bootstrap validation class digunakan agar ketika tombol submit ditekan, sistem menampilkan indikator valid atau tidak valid secara visual.
+
+Pada bagian akhir halaman terdapat Footer yang berisi identitas sistem dan informasi hak cipta. Footer berfungsi sebagai penutup halaman sekaligus memperkuat branding sistem.
+
+Untuk aspek interaktivitas, ditambahkan script JavaScript sederhana di bagian bawah file. Script ini digunakan untuk mengaktifkan validasi Bootstrap dan menampilkan alert sukses ketika form berhasil divalidasi. Setelah beberapa detik, form akan otomatis di-reset dan notifikasi menghilang. Meskipun sistem ini belum terhubung ke database, fitur ini memberikan simulasi proses penyimpanan data.
+
+Secara keseluruhan, website ini telah memenuhi ketentuan tugas akhir karena:
+
+Menggunakan HTML5.
+
+Menggunakan CSS eksternal.
+
+Menggunakan Bootstrap 5.
+
+Memiliki navbar, hero section, section produk dengan card, form minimal empat field, dan footer.
+
+Responsif pada berbagai ukuran layar.
+
+Menggunakan struktur folder yang rapi.
+
+Tidak menggunakan template utuh dari internet.
+
+Sistem ini merepresentasikan konsep dasar manajemen inventori toko aksesoris dalam bentuk antarmuka web statis yang terstruktur, responsif, dan mudah dikembangkan lebih lanjut menjadi sistem dinamis berbasis database di masa mendatang.
