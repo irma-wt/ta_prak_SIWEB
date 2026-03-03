@@ -1,33 +1,139 @@
-Website ini merupakan sistem informasi berbasis web yang dirancang untuk membantu pengelolaan data produk aksesoris secara sederhana tanpa menggunakan database. Seluruh data produk dan gambar ditampilkan secara statis melalui struktur HTML, dengan dukungan Bootstrap 5 untuk memastikan tampilan responsif dan modern.
+# 💎 Sistem Pengelolaan Toko Aksesoris
 
-Secara struktur, halaman ini menggunakan standar HTML5 dengan konfigurasi meta viewport agar dapat menyesuaikan tampilan di berbagai perangkat. Bootstrap 5 dan Bootstrap Icons diimpor melalui CDN untuk mempermudah penggunaan komponen siap pakai seperti grid system, navbar, card, form, serta ikon dekoratif. Styling tambahan ditempatkan pada file CSS eksternal (css/style.css) sehingga struktur kode tetap rapi dan terpisah antara struktur dan desain.
+Aplikasi web statis untuk mengelola produk aksesoris. Dibangun menggunakan **HTML**, **CSS**, dan **JavaScript** murni tanpa framework, dengan bantuan **Bootstrap 5** untuk tampilan yang responsif di berbagai ukuran layar.
 
-Bagian pertama adalah Navbar. Navbar menggunakan komponen Bootstrap dengan kelas navbar-expand-lg dan sticky-top sehingga tetap terlihat saat halaman digulir. Navbar memuat identitas sistem berupa ikon permata dan nama “TokoAksesoris”, serta tiga menu navigasi internal yang mengarah ke section Beranda, Kelola Aksesoris, dan Statistik. Pada perangkat mobile, menu berubah menjadi tombol hamburger melalui fitur collapse Bootstrap.
+---
 
-Setelah navbar, terdapat Hero Section yang berfungsi sebagai header utama sistem. Bagian ini memperkenalkan sistem melalui judul besar “Sistem Pengelolaan Toko Aksesoris”, deskripsi singkat mengenai fungsi sistem, serta dua tombol Call to Action yang mengarahkan pengguna ke bagian form dan daftar produk. Tata letak hero dibuat terpusat (text-center) dan menggunakan elemen visual berupa ikon untuk memperkuat identitas tema aksesoris.
+## 📁 Struktur Folder
 
-Section berikutnya adalah Produk dan Statistik. Pada bagian ini digunakan Bootstrap Grid untuk membuat tampilan responsif dengan pembagian kolom yang menyesuaikan ukuran layar. Terdapat tiga card produk yang masing-masing berisi gambar statis dari folder assets (antingmutiara.jpg, cincin.jpg, dan gelang.jpg), nama produk, deskripsi, harga, stok, serta rating berbentuk ikon bintang. Struktur card dibuat konsisten dengan pembungkus gambar agar tinggi gambar seragam. Selain itu, terdapat tiga kotak ringkasan statistik mini yang menampilkan total produk, total stok unit, dan jumlah kategori sebagai representasi data manajemen inventori.
+```
+toko-aksesoris/
+├── index.html          # Halaman utama
+├── css/
+│   └── style.css       # Semua styling dan dark mode
+├── js/
+│   └── script.js       # Semua logika JavaScript
+├── assets/
+│   ├── navbar.png      # Gambar hero/background
+│   ├── antingmutiara.jpg
+│   ├── cincin.jpg
+│   └── gelang.jpg
+└── README.md
+```
 
-Bagian selanjutnya adalah Form Input Data Aksesoris. Form ini memenuhi ketentuan minimal empat field input, yaitu nama aksesoris, harga jual, jumlah stok, dan kategori produk. Ditambahkan pula field deskripsi sebagai nilai tambah. Setiap input menggunakan validasi HTML5 dengan atribut required, min, dan step untuk memastikan data yang dimasukkan sesuai ketentuan. Bootstrap validation class digunakan agar ketika tombol submit ditekan, sistem menampilkan indikator valid atau tidak valid secara visual.
+---
 
-Pada bagian akhir halaman terdapat Footer yang berisi identitas sistem dan informasi hak cipta. Footer berfungsi sebagai penutup halaman sekaligus memperkuat branding sistem.
+## ✨ Fitur
 
-Untuk aspek interaktivitas, ditambahkan script JavaScript sederhana di bagian bawah file. Script ini digunakan untuk mengaktifkan validasi Bootstrap dan menampilkan alert sukses ketika form berhasil divalidasi. Setelah beberapa detik, form akan otomatis di-reset dan notifikasi menghilang. Meskipun sistem ini belum terhubung ke database, fitur ini memberikan simulasi proses penyimpanan data.
+| Fitur | Teknologi | Keterangan |
+|---|---|---|
+| Dark Mode | LocalStorage + DOM | Tema tersimpan meski halaman di-refresh |
+| Beli / Kurangi Stok | Event Listener + DOM | Stok berkurang tiap klik, tombol disabled saat habis |
+| Wishlist | SessionStorage + DOM | Data tersimpan selama tab browser terbuka |
+| Modal Wishlist | Bootstrap Modal | Daftar wishlist tampil dalam popup |
+| Validasi Form | Bootstrap Validation | Cek input wajib sebelum form dikirim |
 
-Secara keseluruhan, website ini telah memenuhi ketentuan tugas akhir karena:
+---
 
-Menggunakan HTML5.
+## 🗂️ Penjelasan File
 
-Menggunakan CSS eksternal.
+### `index.html`
 
-Menggunakan Bootstrap 5.
+File ini berisi seluruh struktur halaman yang terdiri dari beberapa bagian utama.
 
-Memiliki navbar, hero section, section produk dengan card, form minimal empat field, dan footer.
+**Navbar** berada di paling atas halaman dan selalu terlihat saat di-scroll. Di dalamnya terdapat logo toko, menu navigasi, tombol Wishlist yang menampilkan jumlah produk yang disimpan, serta tombol untuk mengaktifkan Dark Mode.
 
-Responsif pada berbagai ukuran layar.
+**Modal Wishlist** adalah jendela popup yang muncul ketika tombol Wishlist di navbar ditekan. Isi daftar di dalamnya tidak ditulis secara manual di HTML, melainkan dibuat secara otomatis oleh JavaScript setiap kali modal dibuka. Terdapat juga tombol untuk mengosongkan seluruh isi wishlist.
 
-Menggunakan struktur folder yang rapi.
+**Hero Section** adalah bagian pembuka halaman yang menampilkan gambar latar, judul sistem, deskripsi singkat, dan dua tombol navigasi menuju form tambah produk dan daftar produk.
 
-Tidak menggunakan template utuh dari internet.
+**Section Produk** menampilkan tiga card produk yang masing-masing berisi gambar, nama produk, deskripsi singkat, harga, informasi stok, rating bintang, tombol Beli, dan tombol Wishlist. Semua tombol pada card ini dikendalikan oleh JavaScript.
 
-Sistem ini merepresentasikan konsep dasar manajemen inventori toko aksesoris dalam bentuk antarmuka web statis yang terstruktur, responsif, dan mudah dikembangkan lebih lanjut menjadi sistem dinamis berbasis database di masa mendatang.
+**Section Statistik** menampilkan tiga kotak ringkasan berisi total produk, total stok unit, dan jumlah kategori yang tersedia di toko.
+
+**Section Form** menyediakan form untuk menambahkan produk baru. Form ini memiliki validasi otomatis dari Bootstrap sehingga semua field wajib harus diisi sebelum data bisa disimpan. Setelah berhasil, muncul pesan konfirmasi yang memuat detail produk yang baru dimasukkan.
+
+**Footer** berada di bagian paling bawah halaman dan menampilkan nama toko serta informasi hak cipta.
+
+---
+
+### `css/style.css`
+
+File CSS dibagi menjadi 10 bagian yang masing-masing menangani aspek tampilan yang berbeda.
+
+**CSS Variables** menyimpan semua warna, ukuran, dan nilai yang sering dipakai di satu tempat. Dengan cara ini, jika ingin mengganti warna utama toko, cukup mengubah satu baris saja dan seluruh halaman akan ikut berubah secara otomatis.
+
+**Reset & Base** mengatur tampilan dasar browser agar konsisten di semua perangkat, termasuk mengaktifkan scroll halus ketika pengguna mengklik link navigasi.
+
+**Navbar** mengatur warna, bayangan, dan efek hover pada menu navigasi.
+
+**Hero Section** mengatur cara gambar latar ditampilkan agar selalu memenuhi layar tanpa terdistorsi. Ada juga lapisan warna gelap semi-transparan yang ditumpuk di atas foto agar teks di depannya tetap mudah dibaca. Ikon di hero section memiliki animasi naik-turun yang berjalan terus-menerus.
+
+**Section Produk** mengatur tampilan card produk termasuk efek zoom gambar saat kursor diarahkan ke card, badge kategori yang menempel di pojok kiri atas gambar, dan efek bayangan yang lebih kuat saat card di-hover.
+
+**Dark Mode** berisi semua perubahan warna yang terjadi ketika mode gelap diaktifkan. Setiap elemen seperti card, modal, form, dan footer memiliki warna khusus untuk kondisi gelap, dengan palet warna kemerahan gelap yang tetap selaras dengan tema toko.
+
+**Responsive** menyesuaikan tampilan untuk layar HP kecil dan tablet, seperti tombol yang melebar penuh di layar kecil dan tinggi gambar card yang disesuaikan.
+
+---
+
+### `js/script.js`
+
+File JavaScript dibagi menjadi empat bagian utama yang masing-masing menangani satu fitur.
+
+---
+
+#### 1. Dark Mode
+
+Bagian ini menangani fitur pergantian tema terang dan gelap. Ketika tombol ditekan, JavaScript menambahkan atau menghapus sebuah penanda pada tag body halaman. CSS kemudian mendeteksi penanda tersebut dan mengubah semua warna secara otomatis sesuai aturan yang sudah disiapkan.
+
+Pilihan tema pengguna disimpan di **localStorage** browser. Artinya, meskipun halaman ditutup dan dibuka kembali, tema yang terakhir dipilih akan langsung aktif tanpa perlu memilih ulang.
+
+---
+
+#### 2. Fitur Beli
+
+Bagian ini menangani tombol Beli pada setiap card produk. Ketika tombol ditekan, JavaScript membaca angka stok yang sedang tampil di halaman, menguranginya sebesar satu, lalu menuliskan angka baru kembali ke halaman — semuanya terjadi secara langsung tanpa perlu refresh.
+
+Setiap card bekerja secara independen sehingga menekan tombol Beli pada satu produk tidak akan memengaruhi produk lainnya. Jika stok sudah mencapai angka nol, tombol Beli secara otomatis dinonaktifkan dan tulisannya berubah menjadi "Habis" sebagai tanda kepada pengguna bahwa produk tersebut tidak tersedia lagi.
+
+---
+
+#### 3. Fitur Wishlist
+
+Bagian ini menangani seluruh alur wishlist mulai dari menambahkan produk, menampilkan daftar, hingga mengosongkannya.
+
+Ketika tombol Wishlist pada sebuah card ditekan, nama produk disimpan ke dalam **sessionStorage** browser. Berbeda dengan localStorage, data di sessionStorage hanya bertahan selama tab browser masih terbuka — cocok untuk fitur wishlist sementara. Program juga memeriksa apakah produk sudah ada di daftar sebelumnya untuk mencegah duplikat.
+
+Angka counter di navbar diperbarui setiap kali ada produk baru yang masuk ke wishlist. Ketika modal Wishlist dibuka, JavaScript membaca data yang tersimpan dan membuat tampilan daftar secara dinamis di dalam modal tersebut. Tombol "Kosongkan" akan menghapus semua data dari sessionStorage sekaligus mereset tampilan daftar dan counter navbar.
+
+---
+
+#### 4. Validasi Form
+
+Bagian ini menangani proses pengiriman form tambah produk. Sebelum data diterima, JavaScript meminta Bootstrap untuk memeriksa semua field yang wajib diisi. Jika ada yang kosong atau tidak sesuai, form akan menampilkan pesan kesalahan berwarna merah di bawah field tersebut.
+
+Jika semua field sudah terisi dengan benar, muncul pesan konfirmasi berwarna hijau muda di bawah form yang memuat nama produk, kategori, stok, dan harga yang baru dimasukkan. Setelah 2,5 detik, form otomatis dikosongkan dan pesan konfirmasi menghilang sehingga pengguna siap memasukkan data produk berikutnya.
+
+---
+
+## 🚀 Cara Menjalankan
+
+1. Unduh atau clone semua file ke dalam satu folder
+2. Pastikan folder `assets/` berisi gambar yang dibutuhkan sesuai nama yang ada di `index.html`
+3. Buka file `index.html` langsung di browser — tidak membutuhkan server atau instalasi apapun
+
+> Semua library seperti Bootstrap dan Bootstrap Icons dimuat otomatis melalui CDN, jadi perangkat harus terhubung ke internet saat pertama kali membuka halaman.
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+| Teknologi | Versi | Fungsi |
+|---|---|---|
+| HTML5 | — | Struktur halaman |
+| CSS3 | — | Styling, animasi, dan dark mode |
+| JavaScript ES6 | — | Logika interaktif |
+| Bootstrap | 5.3.3 | Grid, komponen, modal, dan validasi form |
+| Bootstrap Icons | 1.11.3 | Ikon-ikon pada UI |
+
