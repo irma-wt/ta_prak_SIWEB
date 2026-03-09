@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -20,17 +23,15 @@
     rel="stylesheet"
   />
 
-  <!-- CSS Eksternal Kita Sendiri -->
+  <!-- CSS Eksternal -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <!-- =============================================
        NAVBAR
-       Berisi logo gambar (assets/navbar.png) di kiri
-       dan menu navigasi di kanan.
-       'sticky-top' membuat navbar tetap terlihat
-       saat halaman di-scroll ke bawah.
+       Berisi: Brand, menu navigasi, tombol Wishlist,
+       tombol Dark Mode, dan tombol Login/Logout.
        ============================================= -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNavbar">
     <div class="container">
@@ -41,7 +42,7 @@
         <span>TokoAksesoris</span>
       </a>
 
-      <!-- Tombol Hamburger: muncul di layar mobile (< lg) -->
+      <!-- Tombol Hamburger: muncul di layar mobile -->
       <button
         class="navbar-toggler"
         type="button"
@@ -54,25 +55,22 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!-- Daftar Menu Navigasi -->
+      <!-- Daftar Menu + Tombol Aksi -->
       <div class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <!-- Menu 1: Beranda -->
           <li class="nav-item">
             <a class="nav-link active" href="#beranda">
               <i class="bi bi-house-door me-1"></i>Beranda
             </a>
           </li>
 
-          <!-- Menu 2: Kelola Aksesoris (link ke form input) -->
           <li class="nav-item">
             <a class="nav-link" href="#kelola">
               <i class="bi bi-pencil-square me-1"></i>Kelola Aksesoris
             </a>
           </li>
 
-          <!-- Menu 3: Statistik (link ke section produk) -->
           <li class="nav-item">
             <a class="nav-link" href="#statistik">
               <i class="bi bi-bar-chart-line me-1"></i>Statistik
@@ -80,6 +78,43 @@
           </li>
 
         </ul>
+
+        <!-- Tombol Wishlist, Dark Mode, dan Login/Logout di sisi kanan navbar -->
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 flex-wrap">
+
+          <!-- Tombol Wishlist: membuka modal -->
+          <button
+            class="btn btn-outline-light btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#wishlistModal"
+          >
+            <i class="bi bi-heart-fill me-1"></i>
+            Wishlist (<span id="wishlist-count">0</span>)
+          </button>
+
+          <!-- Tombol Dark Mode: dikendalikan oleh script.js -->
+          <button id="btn-theme" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-moon-fill me-1"></i>Mode Gelap
+          </button>
+
+          <!-- Kondisi Login/Logout menggunakan PHP Session -->
+          <?php if (isset($_SESSION['user'])): ?>
+            <!-- Sudah login: tampilkan nama user dan tombol Logout -->
+            <span class="navbar-user-badge">
+              <i class="bi bi-person-circle me-1"></i>
+              <?php echo htmlspecialchars($_SESSION['user']); ?>
+            </span>
+            <a href="controller/logout.php" class="btn btn-danger btn-sm">
+              <i class="bi bi-box-arrow-right me-1"></i>Logout
+            </a>
+          <?php else: ?>
+            <!-- Belum login: tampilkan tombol Login -->
+            <a href="login.php" class="btn btn-warning btn-sm fw-semibold">
+              <i class="bi bi-box-arrow-in-right me-1"></i>Login
+            </a>
+          <?php endif; ?>
+
+        </div>
       </div>
     </div>
   </nav>
@@ -87,27 +122,59 @@
 
 
   <!-- =============================================
-       HERO SECTION / HEADER
-       Bagian pembuka halaman yang memperkenalkan sistem.
+       MODAL WISHLIST
+       Menampilkan daftar produk yang di-wishlist.
+       Diisi secara dinamis oleh script.js via DOM.
+       ============================================= -->
+  <div class="modal fade" id="wishlistModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header" style="background-color: #FFF0F4; border-bottom-color: #F4A7B9;">
+          <h5 class="modal-title" style="color: #C2607A; font-family: Georgia, serif;">
+            <i class="bi bi-heart-fill me-2" style="color: #C2607A;"></i>Daftar Wishlist Saya
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- List diisi oleh JavaScript -->
+          <ul class="list-group" id="daftar-wishlist">
+          </ul>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-1"></i>Tutup
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="hapusWishlist()">
+            <i class="bi bi-trash me-1"></i>Kosongkan
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- END MODAL WISHLIST -->
+
+
+  <!-- =============================================
+       HERO SECTION
        ============================================= -->
   <section id="beranda" class="hero-section d-flex align-items-center">
     <div class="container text-center">
 
-      <!-- Ikon dekoratif dengan animasi mengambang -->
       <div class="hero-icon mb-4">
         <i class="bi bi-gem"></i>
       </div>
 
-      <!-- Judul Utama Sistem -->
       <h1 class="hero-title">Sistem Pengelolaan Toko Aksesoris</h1>
 
-      <!-- Deskripsi Singkat -->
       <p class="hero-desc mx-auto">
         Platform digital untuk mengelola produk aksesoris dengan mudah dan efisien.
         Pantau stok, atur harga, dan kelola kategori produk Anda dalam satu tempat.
       </p>
 
-      <!-- Tombol CTA -->
       <a href="#kelola" class="btn btn-hero me-2">
         <i class="bi bi-plus-circle me-1"></i>Tambah Produk
       </a>
@@ -122,54 +189,37 @@
 
   <!-- =============================================
        SECTION PRODUK & STATISTIK
-       Menampilkan 3 card produk secara statis.
-       Semua data dan gambar langsung ditulis di HTML
-       (tidak ada JavaScript dinamis / database).
-
-       Path gambar: assets/nama-file.jpg
+       Tiap card punya:
+       - .btn-beli       → tombol Beli (kurangi stok via JS)
+       - .btn-wishlist   → tombol Wishlist (simpan ke SessionStorage)
+       - .stok-text      → paragraf stok yang dimanipulasi JS
+       - .product-name   → nama produk yang dibaca JS
        ============================================= -->
   <section id="statistik" class="stats-section py-5">
     <div class="container">
 
-      <!-- Judul Section -->
       <div class="section-header text-center mb-5">
         <h2 class="section-title">Produk Aksesoris</h2>
         <p class="section-subtitle">Daftar produk pilihan yang tersedia di toko kami</p>
       </div>
 
-      <!-- 
-        Bootstrap Grid:
-        col-12     → 1 kolom di HP kecil (full lebar)
-        col-sm-6   → 2 kolom di tablet
-        col-lg-4   → 3 kolom di laptop/desktop
-        g-4        → gap/jarak antar kolom = 1.5rem
-      -->
-      <div class="row g-4">
+      <div class="row g-4" id="container-produk">
 
         <!-- ============================
              CARD 1: Anting Mutiara
-             Gambar: assets/antingmutiara.jpg
              ============================ -->
         <div class="col-12 col-sm-6 col-lg-4">
           <div class="product-card card h-100">
 
-            <!-- 
-              Wrapper gambar dengan tinggi tetap (di-set via CSS .card-img-wrapper).
-              Tinggi tetap penting agar semua card sejajar meski rasio gambar berbeda.
-              img-fluid → Bootstrap class agar gambar mengecil mengikuti lebar kolom.
-              object-fit: cover → CSS agar gambar mengisi area tanpa terdistorsi.
-            -->
             <div class="card-img-wrapper">
               <img
                 src="assets/antingmutiara.jpg"
                 alt="Anting Mutiara Elegan"
                 class="img-fluid product-img"
               />
-              <!-- Badge kategori ditumpuk di atas gambar (position: absolute) -->
               <span class="product-badge">Anting</span>
             </div>
 
-            <!-- Body card: teks produk -->
             <div class="card-body d-flex flex-column">
               <h5 class="product-name">Anting Mutiara Elegan</h5>
               <p class="product-desc text-muted small">
@@ -177,22 +227,28 @@
                 acara formal maupun kasual sehari-hari.
               </p>
 
-              <!-- Harga & Stok: mt-auto mendorong blok ini ke bawah card (flex column trick) -->
               <div class="product-meta mt-auto">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="product-price">Rp 185.000</span>
-                  <span class="product-stock">
+                  <span class="stok-text">
                     <i class="bi bi-archive me-1"></i>Stok: 42
                   </span>
                 </div>
-                <!-- Rating bintang statis menggunakan Bootstrap Icons -->
-                <div class="product-rating">
+                <div class="product-rating mb-3">
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-half"></i>
                   <span class="ms-1 small text-muted">(4.5)</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm btn-beli w-50">
+                    <i class="bi bi-cart-plus me-1"></i>Beli
+                  </button>
+                  <button class="btn btn-outline-danger btn-sm btn-wishlist w-50">
+                    <i class="bi bi-heart me-1"></i>Wishlist
+                  </button>
                 </div>
               </div>
             </div>
@@ -204,7 +260,6 @@
 
         <!-- ============================
              CARD 2: Cincin Perak
-             Gambar: assets/cincin.jpg
              ============================ -->
         <div class="col-12 col-sm-6 col-lg-4">
           <div class="product-card card h-100">
@@ -228,17 +283,25 @@
               <div class="product-meta mt-auto">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="product-price">Rp 220.000</span>
-                  <span class="product-stock">
+                  <span class="stok-text">
                     <i class="bi bi-archive me-1"></i>Stok: 28
                   </span>
                 </div>
-                <div class="product-rating">
+                <div class="product-rating mb-3">
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <span class="ms-1 small text-muted">(5.0)</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm btn-beli w-50">
+                    <i class="bi bi-cart-plus me-1"></i>Beli
+                  </button>
+                  <button class="btn btn-outline-danger btn-sm btn-wishlist w-50">
+                    <i class="bi bi-heart me-1"></i>Wishlist
+                  </button>
                 </div>
               </div>
             </div>
@@ -250,7 +313,6 @@
 
         <!-- ============================
              CARD 3: Gelang Emas
-             Gambar: assets/gelang.jpg
              ============================ -->
         <div class="col-12 col-sm-6 col-lg-4">
           <div class="product-card card h-100">
@@ -274,17 +336,25 @@
               <div class="product-meta mt-auto">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="product-price">Rp 310.000</span>
-                  <span class="product-stock">
+                  <span class="stok-text">
                     <i class="bi bi-archive me-1"></i>Stok: 15
                   </span>
                 </div>
-                <div class="product-rating">
+                <div class="product-rating mb-3">
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star"></i>
                   <span class="ms-1 small text-muted">(4.0)</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm btn-beli w-50">
+                    <i class="bi bi-cart-plus me-1"></i>Beli
+                  </button>
+                  <button class="btn btn-outline-danger btn-sm btn-wishlist w-50">
+                    <i class="bi bi-heart me-1"></i>Wishlist
+                  </button>
                 </div>
               </div>
             </div>
@@ -297,7 +367,7 @@
       <!-- END ROW PRODUK -->
 
 
-      <!-- ---- Ringkasan Statistik Toko (3 kotak angka) ---- -->
+      <!-- ---- Ringkasan Statistik Toko ---- -->
       <div class="row g-3 mt-4">
 
         <div class="col-12 col-md-4">
@@ -346,6 +416,8 @@
 
   <!-- =============================================
        SECTION FORM INPUT DATA AKSESORIS
+       Hanya tampil jika sudah login (PHP Session).
+       Jika belum login, tampilkan pesan dengan link login.
        ============================================= -->
   <section id="kelola" class="form-section py-5">
     <div class="container">
@@ -355,6 +427,8 @@
         <p class="section-subtitle">Tambahkan produk aksesoris baru ke dalam sistem</p>
       </div>
 
+      <?php if (isset($_SESSION['user'])): ?>
+      <!-- Sudah login: tampilkan form tambah produk -->
       <div class="row justify-content-center">
         <div class="col-12 col-lg-7">
           <div class="form-card card p-4 p-md-5">
@@ -413,21 +487,21 @@
                 <div class="invalid-feedback">Stok wajib diisi (minimal 0).</div>
               </div>
 
-              <!-- FIELD 4: Kategori (Select Dropdown) -->
+              <!-- FIELD 4: Kategori -->
               <div class="mb-4">
                 <label for="kategori" class="form-label">
                   <i class="bi bi-grid me-1"></i>Kategori Produk
                 </label>
                 <select class="form-select custom-input" id="kategori" required>
                   <option value="" selected disabled>-- Pilih Kategori --</option>
-                  <option value="gelang">Gelang</option>
-                  <option value="kalung">Kalung</option>
-                  <option value="anting">Anting</option>
-                  <option value="cincin">Cincin</option>
-                  <option value="bros">Bros</option>
-                  <option value="jepit-rambut">Jepit Rambut</option>
-                  <option value="dompet">Dompet Mini</option>
-                  <option value="lainnya">Lainnya</option>
+                  <option value="Gelang">Gelang</option>
+                  <option value="Kalung">Kalung</option>
+                  <option value="Anting">Anting</option>
+                  <option value="Cincin">Cincin</option>
+                  <option value="Bros">Bros</option>
+                  <option value="Jepit Rambut">Jepit Rambut</option>
+                  <option value="Dompet Mini">Dompet Mini</option>
+                  <option value="Lainnya">Lainnya</option>
                 </select>
                 <div class="invalid-feedback">Silakan pilih kategori produk.</div>
               </div>
@@ -462,7 +536,7 @@
 
             </form>
 
-            <!-- Alert sukses: tersembunyi secara default -->
+            <!-- Alert sukses: tersembunyi secara default, ditampilkan oleh script.js -->
             <div id="alertSukses" class="alert alert-success mt-4 d-none" role="alert">
               <i class="bi bi-check-circle-fill me-2"></i>
               <strong>Berhasil!</strong> Data aksesoris berhasil ditambahkan ke sistem.
@@ -471,6 +545,27 @@
           </div>
         </div>
       </div>
+
+      <?php else: ?>
+      <!-- Belum login: tampilkan pesan dan tombol login -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+          <div class="form-card card p-4 p-md-5 text-center">
+            <div class="mb-3">
+              <i class="bi bi-lock-fill" style="font-size: 3rem; color: #C2607A; opacity: 0.6;"></i>
+            </div>
+            <h5 class="form-card-title mb-3">Akses Terbatas</h5>
+            <p class="text-muted mb-4">
+              🔒 Silakan <a href="login.php" style="color: #C2607A; font-weight: 600;">login</a>
+              terlebih dahulu untuk menambahkan produk aksesoris baru ke dalam sistem.
+            </p>
+            <a href="login.php" class="btn btn-submit">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Login Sekarang
+            </a>
+          </div>
+        </div>
+      </div>
+      <?php endif; ?>
 
     </div>
   </section>
@@ -482,7 +577,6 @@
        ============================================= -->
   <footer class="site-footer py-4">
     <div class="container text-center">
-      <!-- Brand teks di footer -->
       <div class="mb-2">
         <i class="bi bi-gem me-1" style="color: #F4A7B9;"></i>
         <strong style="color: #F4A7B9;">TokoAksesoris</strong>
@@ -495,41 +589,11 @@
   <!-- END FOOTER -->
 
 
-  <!-- Bootstrap 5 JS Bundle (wajib: navbar collapse, dll.) -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-  ></script>
+  <!-- Bootstrap 5 JS Bundle (WAJIB di atas script.js agar modal bisa bekerja) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- =============================================
-       SCRIPT: Validasi Form Bootstrap
-       Mengaktifkan tampilan valid/invalid saat submit.
-       ============================================= -->
-  <script>
-    const forms = document.querySelectorAll('.needs-validation');
-
-    forms.forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (form.checkValidity()) {
-          // Form valid → tampilkan pesan sukses
-          const alertSukses = document.getElementById('alertSukses');
-          alertSukses.classList.remove('d-none');
-
-          // Reset form setelah 2.5 detik
-          setTimeout(function () {
-            form.reset();
-            form.classList.remove('was-validated');
-            alertSukses.classList.add('d-none');
-          }, 2500);
-        }
-
-        // Tambahkan class 'was-validated' agar Bootstrap tampilkan warna merah/hijau
-        form.classList.add('was-validated');
-      });
-    });
-  </script>
+  <!-- Script utama kita (dark mode, beli, wishlist, validasi form) -->
+  <script src="js/script.js"></script>
 
 </body>
 </html>

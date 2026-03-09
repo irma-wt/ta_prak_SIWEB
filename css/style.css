@@ -7,17 +7,15 @@
 
 /* ------------------------------------------------
    1. CSS VARIABLES
-      Semua warna, font, dan nilai berulang disimpan
-      di sini agar mudah diubah secara konsisten.
    ------------------------------------------------ */
 :root {
-  --color-primary:    #C2607A;   /* Pink rose – warna utama brand */
-  --color-secondary:  #F4A7B9;   /* Pink muda – aksen lembut */
-  --color-light-bg:   #FFF0F4;   /* Pink sangat muda – latar section */
+  --color-primary:    #C2607A;
+  --color-secondary:  #F4A7B9;
+  --color-light-bg:   #FFF0F4;
   --color-white:      #FFFFFF;
-  --color-dark-text:  #3D1A24;   /* Coklat kemerahan gelap – teks utama */
-  --color-muted:      #9B7280;   /* Mauve muted – teks pendukung */
-  --color-footer-bg:  #3D1A24;   /* Gelap kemerahan – footer */
+  --color-dark-text:  #3D1A24;
+  --color-muted:      #9B7280;
+  --color-footer-bg:  #3D1A24;
 
   --font-heading: 'Georgia', 'Times New Roman', serif;
   --font-body:    'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -43,7 +41,6 @@
 }
 
 html {
-  /* Scroll halus saat klik link anchor (#beranda, dll.) */
   scroll-behavior: smooth;
 }
 
@@ -52,6 +49,7 @@ body {
   background-color: var(--color-light-bg);
   color: var(--color-dark-text);
   line-height: 1.7;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 
@@ -62,9 +60,9 @@ body {
   background-color: var(--color-primary);
   padding: 10px 0;
   box-shadow: 0 2px 12px rgba(194, 96, 122, 0.25);
+  transition: background-color 0.3s;
 }
 
-/* Brand/teks nama toko di navbar */
 #mainNavbar .navbar-brand {
   font-family: var(--font-heading);
   font-size: 1.25rem;
@@ -73,7 +71,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Link menu di navbar */
 #mainNavbar .nav-link {
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
@@ -88,22 +85,23 @@ body {
   background-color: rgba(255, 214, 227, 0.15);
 }
 
+/* Badge nama user yang sudah login di navbar */
+.navbar-user-badge {
+  color: #FFD6E3;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  background-color: rgba(255, 214, 227, 0.15);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 214, 227, 0.3);
+}
+
 
 /* ------------------------------------------------
    4. HERO SECTION
-      navbar.png dijadikan background image.
-      Overlay pink semi-transparan ditumpuk di atas foto
-      menggunakan pseudo-element ::before, agar teks
-      di atasnya tetap terbaca dengan jelas.
    ------------------------------------------------ */
 .hero-section {
   min-height: 90vh;
-  /*
-    background-image: url foto sebagai latar
-    background-size: cover  → foto memenuhi seluruh area
-    background-position: center → titik fokus di tengah
-    background-attachment: fixed → efek parallax ringan saat scroll
-  */
   background-image: url('../assets/navbar.png');
   background-size: cover;
   background-position: center;
@@ -114,37 +112,25 @@ body {
   padding: 80px 0 60px;
 }
 
-/*
-  OVERLAY: lapisan warna pink semi-transparan
-  ditumpuk di ATAS foto menggunakan ::before.
-  Ini membuat teks tetap kontras dan terbaca
-  meski foto di belakangnya terang atau ramai.
-  z-index: 1 → overlay di atas foto
-*/
 .hero-section::before {
   content: '';
   position: absolute;
-  inset: 0;                              /* shorthand: top/right/bottom/left = 0 */
+  inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.25) 0%,    /* Gelap tipis di atas agar navbar kontras */
-    rgba(0, 0, 0, 0.10) 40%,   /* Hampir transparan di tengah → foto terlihat jelas */
-    rgba(0, 0, 0, 0.30) 100%   /* Sedikit gelap di bawah agar teks terbaca */
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.10) 40%,
+    rgba(0, 0, 0, 0.30) 100%
   );
   z-index: 1;
   pointer-events: none;
 }
 
-/*
-  Semua konten hero (teks, tombol) harus di atas overlay.
-  z-index: 2 → di atas ::before yang z-index: 1
-*/
 .hero-section .container {
   position: relative;
   z-index: 2;
 }
 
-/* Lingkaran dekoratif pojok kanan bawah (di atas overlay) */
 .hero-section::after {
   content: '';
   position: absolute;
@@ -158,7 +144,6 @@ body {
   pointer-events: none;
 }
 
-/* Ikon gem hero dengan animasi mengambang */
 .hero-icon i {
   font-size: 4rem;
   color: #FFD6E3;
@@ -166,13 +151,11 @@ body {
   animation: floatIcon 3s ease-in-out infinite;
 }
 
-/* Animasi naik-turun ikon */
 @keyframes floatIcon {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-10px); }
 }
 
-/* Judul utama hero – ukuran responsif menggunakan clamp() */
 .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(1.8rem, 4vw, 3rem);
@@ -183,7 +166,6 @@ body {
   text-shadow: 0 2px 12px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.3);
 }
 
-/* Deskripsi hero */
 .hero-desc {
   font-size: clamp(0.95rem, 2vw, 1.15rem);
   color: rgba(255, 255, 255, 0.95);
@@ -192,7 +174,6 @@ body {
   text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 
-/* Tombol CTA utama (pink cerah) */
 .btn-hero {
   background-color: #FFD6E3;
   color: var(--color-dark-text);
@@ -210,7 +191,6 @@ body {
   box-shadow: 0 6px 20px rgba(255, 214, 227, 0.5);
 }
 
-/* Tombol CTA sekunder (outline putih) */
 .btn-hero-outline {
   background: transparent;
   color: var(--color-white);
@@ -231,7 +211,7 @@ body {
 
 
 /* ------------------------------------------------
-   5. JUDUL SECTION (digunakan di semua section)
+   5. JUDUL SECTION
    ------------------------------------------------ */
 .section-title {
   font-family: var(--font-heading);
@@ -241,7 +221,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Garis dekoratif pink di bawah judul */
 .section-title::after {
   content: '';
   display: block;
@@ -266,56 +245,43 @@ body {
   background-color: var(--color-light-bg);
 }
 
-/* ---- Card Produk ---- */
 .product-card {
   border: none;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   background-color: var(--color-white);
-  overflow: hidden;          /* Agar gambar tidak keluar dari border-radius card */
+  overflow: hidden;
   transition: var(--transition);
 }
 
-/* Efek hover card: naik & bayangan lebih gelap */
 .product-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
 }
 
-/* Wrapper gambar: fallback background saat gambar belum muat */
 .card-img-wrapper {
   width: 100%;
   height: 220px;
   overflow: hidden;
   position: relative;
-  background-color: #fce4ec; /* Pink muda sebagai placeholder */
+  background-color: #fce4ec;
 }
 
-/* 
-  GAMBAR PRODUK
-  - width: 100%        → mengisi penuh lebar wrapper
-  - height: 100%       → mengisi penuh tinggi wrapper (220px)
-  - object-fit: cover  → gambar dipotong proporsional (tidak stretch/distorsi)
-  - object-position: center → titik fokus di tengah gambar
-  - Transition untuk efek zoom saat hover
-*/
 .product-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;         /* Memotong gambar agar mengisi area tanpa distorsi */
-  object-position: center;   /* Pusatkan gambar saat dipotong */
+  object-fit: cover;
+  object-position: center;
   transition: transform 0.4s ease;
   display: block;
 }
 
-/* Efek zoom gambar saat card di-hover */
 .product-card:hover .product-img {
   transform: scale(1.05);
 }
 
-/* Badge kategori: ditumpuk di pojok kiri atas gambar */
 .product-badge {
-  position: absolute;        /* Relatif terhadap .card-img-wrapper */
+  position: absolute;
   top: 12px;
   left: 12px;
   background-color: var(--color-primary);
@@ -325,16 +291,14 @@ body {
   padding: 4px 12px;
   border-radius: 20px;
   letter-spacing: 0.3px;
-  z-index: 2;                /* Di atas gambar */
+  z-index: 2;
 }
 
-/* Varian badge warna pink cerah */
 .product-badge--gold {
   background-color: #F4A7B9;
   color: var(--color-dark-text);
 }
 
-/* Nama produk di dalam card body */
 .product-name {
   font-family: var(--font-heading);
   font-size: 1.05rem;
@@ -343,34 +307,33 @@ body {
   margin-bottom: 8px;
 }
 
-/* Deskripsi singkat produk */
 .product-desc {
   font-size: 0.88rem;
   line-height: 1.6;
   margin-bottom: 0;
 }
 
-/* Harga produk */
 .product-price {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--color-primary);
 }
 
-/* Info stok */
 .product-stock {
   font-size: 0.82rem;
   color: var(--color-muted);
 }
 
-/* Rating bintang: warna pink */
+.stok-text {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
 .product-rating i {
   color: #E07898;
   font-size: 0.82rem;
 }
 
-
-/* Statistik mini: border kiri pink */
 .stat-mini {
   background-color: var(--color-white);
   border-radius: var(--radius-md);
@@ -384,7 +347,6 @@ body {
   box-shadow: var(--shadow-hover);
 }
 
-/* Varian warna pink muda */
 .stat-mini--gold {
   border-left-color: var(--color-secondary);
 }
@@ -393,7 +355,6 @@ body {
   background: linear-gradient(135deg, #F4A7B9, #f7c5d1);
 }
 
-/* Lingkaran ikon statistik mini */
 .stat-mini-icon {
   width: 50px;
   height: 50px;
@@ -410,7 +371,6 @@ body {
   color: var(--color-white);
 }
 
-/* Angka statistik */
 .stat-mini-number {
   font-family: var(--font-heading);
   font-size: 1.6rem;
@@ -419,7 +379,6 @@ body {
   line-height: 1.2;
 }
 
-/* Label statistik */
 .stat-mini-label {
   font-size: 0.85rem;
   color: var(--color-muted);
@@ -430,10 +389,9 @@ body {
    7. SECTION FORM INPUT
    ------------------------------------------------ */
 .form-section {
-  background-color: #FDE8EF; /* Pink muda lembut untuk section form */
+  background-color: #FDE8EF;
 }
 
-/* Card pembungkus form */
 .form-card {
   background-color: var(--color-white);
   border: none;
@@ -441,7 +399,6 @@ body {
   box-shadow: var(--shadow-card);
 }
 
-/* Judul card form */
 .form-card-title {
   font-family: var(--font-heading);
   color: var(--color-primary);
@@ -450,7 +407,6 @@ body {
   padding-bottom: 12px;
 }
 
-/* Label input form */
 .form-label {
   font-weight: 600;
   color: var(--color-dark-text);
@@ -458,7 +414,6 @@ body {
   margin-bottom: 6px;
 }
 
-/* Input, Select, Textarea */
 .custom-input {
   border: 1.5px solid #D1D5DB;
   border-radius: var(--radius-sm);
@@ -468,7 +423,6 @@ body {
   background-color: #FAFAFA;
 }
 
-/* Efek focus: border berubah warna pink */
 .custom-input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(194, 96, 122, 0.15);
@@ -476,7 +430,6 @@ body {
   outline: none;
 }
 
-/* Tombol submit utama */
 .btn-submit {
   background: linear-gradient(135deg, #B5435F, var(--color-primary));
   color: var(--color-white);
@@ -496,7 +449,6 @@ body {
   color: var(--color-white);
 }
 
-/* Tombol reset */
 .btn-reset {
   background: transparent;
   color: var(--color-muted);
@@ -513,21 +465,18 @@ body {
   color: var(--color-dark-text);
 }
 
-/* Override Bootstrap: warna field valid (hijau – tetap standar aksesibilitas) */
 .was-validated .form-control:valid,
 .was-validated .form-select:valid {
   border-color: #16A34A;
   background-color: #F0FFF4;
 }
 
-/* Override Bootstrap: warna field invalid (merah – tetap standar aksesibilitas) */
 .was-validated .form-control:invalid,
 .was-validated .form-select:invalid {
   border-color: #DC2626;
   background-color: #FFF5F5;
 }
 
-/* Alert sukses: warna pink lembut */
 .alert-success {
   background-color: #FFF0F4;
   border-color: #F4A7B9;
@@ -544,14 +493,12 @@ body {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Teks brand di footer */
 .site-footer strong {
   font-family: var(--font-heading);
   font-size: 1.1rem;
   letter-spacing: 0.3px;
 }
 
-/* Teks copyright */
 .footer-text {
   font-size: 0.88rem;
   color: rgba(255, 255, 255, 0.5);
@@ -559,19 +506,314 @@ body {
 }
 
 
-/* ------------------------------------------------
-   9. RESPONSIVE (Media Queries)
-      Fine-tuning untuk ukuran layar tertentu.
-      Bootstrap sudah menangani grid dasar,
-      bagian ini untuk penyesuaian tambahan.
-   ------------------------------------------------ */
+/* ================================================
+   9. DARK MODE STYLES
+   ================================================ */
+body.dark-mode {
+  background-color: #1a0a0f;
+  color: #f0dde3;
+}
 
-/* Smartphone kecil: < 576px */
+body.dark-mode #mainNavbar {
+  background-color: #2a0d16 !important;
+}
+
+body.dark-mode .stats-section {
+  background-color: #1a0a0f;
+}
+
+body.dark-mode .form-section {
+  background-color: #200c14;
+}
+
+body.dark-mode .product-card,
+body.dark-mode .stat-mini,
+body.dark-mode .form-card {
+  background-color: #2a1018;
+  border-color: #4a2030;
+  color: #f0dde3;
+}
+
+body.dark-mode .product-name,
+body.dark-mode .stat-mini-number,
+body.dark-mode .form-label {
+  color: #f0dde3;
+}
+
+body.dark-mode .product-desc,
+body.dark-mode .product-stock,
+body.dark-mode .stok-text,
+body.dark-mode .stat-mini-label,
+body.dark-mode .section-subtitle {
+  color: #c9a0ae;
+}
+
+body.dark-mode .section-title {
+  color: #F4A7B9;
+}
+
+body.dark-mode .section-title::after {
+  background-color: #F4A7B9;
+}
+
+body.dark-mode .product-price,
+body.dark-mode .stat-mini-number {
+  color: #F4A7B9;
+}
+
+body.dark-mode .modal-content {
+  background-color: #2a1018;
+  color: #f0dde3;
+}
+
+body.dark-mode .modal-header {
+  border-bottom-color: #4a2030;
+}
+
+body.dark-mode .modal-footer {
+  border-top-color: #4a2030;
+}
+
+body.dark-mode .list-group-item {
+  background-color: #341420;
+  color: #f0dde3;
+  border-color: #4a2030;
+}
+
+body.dark-mode .custom-input,
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #341420;
+  color: #f0dde3;
+  border-color: #6a3040;
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #c9a0ae;
+}
+
+body.dark-mode .form-card-title {
+  color: #F4A7B9;
+  border-bottom-color: #4a2030;
+}
+
+body.dark-mode .site-footer {
+  background-color: #0f0508;
+}
+
+body.dark-mode .card-img-wrapper {
+  background-color: #3a1520;
+}
+
+body.dark-mode .navbar-user-badge {
+  color: #F4A7B9;
+  background-color: rgba(244, 167, 185, 0.12);
+  border-color: rgba(244, 167, 185, 0.25);
+}
+
+
+/* ================================================
+   10. LOGIN PAGE
+   ================================================ */
+body.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3D1A24 0%, #6B2D40 40%, #C2607A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Efek dekoratif background berupa lingkaran blur */
+body.login-page::before {
+  content: '';
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(244, 167, 185, 0.08);
+  top: -150px;
+  right: -100px;
+  pointer-events: none;
+}
+
+body.login-page::after {
+  content: '';
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: rgba(255, 214, 227, 0.06);
+  bottom: -100px;
+  left: -80px;
+  pointer-events: none;
+}
+
+/* Kotak form login */
+.login-box {
+  background-color: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 214, 227, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+/* Ikon gem di halaman login */
+.login-gem-icon {
+  font-size: 3rem;
+  color: #FFD6E3;
+  filter: drop-shadow(0 0 16px rgba(255, 214, 227, 0.5));
+}
+
+/* Judul halaman login */
+.login-heading {
+  color: #FFD6E3;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* Subjudul halaman login */
+.login-sub {
+  color: rgba(255, 214, 227, 0.65);
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* Label field form di halaman login */
+body.login-page .form-label {
+  color: rgba(255, 214, 227, 0.85);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Input field di halaman login */
+body.login-page .form-control {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 214, 227, 0.25);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+body.login-page .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #FFD6E3;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 214, 227, 0.18);
+  outline: none;
+}
+
+body.login-page .form-control::placeholder {
+  color: rgba(255, 214, 227, 0.4);
+}
+
+/* Tombol toggle show/hide password */
+.btn-toggle-pass {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 214, 227, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.btn-toggle-pass:hover {
+  color: #FFD6E3;
+}
+
+/* Checkbox Remember Me */
+body.login-page .form-check-label {
+  color: rgba(255, 214, 227, 0.75);
+  font-size: 0.88rem;
+}
+
+body.login-page .form-check-input {
+  border-color: rgba(255, 214, 227, 0.4);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+body.login-page .form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Tombol Login */
+.btn-login {
+  background: linear-gradient(135deg, #B5435F, var(--color-primary));
+  color: var(--color-white);
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: var(--transition);
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #9E3050, #B5435F);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(194, 96, 122, 0.45);
+  color: var(--color-white);
+}
+
+/* Tombol Kembali */
+.btn-back {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 214, 227, 0.85);
+  border: 1.5px solid rgba(255, 214, 227, 0.2);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 214, 227, 0.4);
+  color: #FFD6E3;
+  transform: translateY(-1px);
+}
+
+/* Info akun demo di bawah form */
+.login-demo-info {
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 214, 227, 0.45);
+  border-top: 1px solid rgba(255, 214, 227, 0.1);
+  padding-top: 16px;
+}
+
+.login-demo-info strong {
+  color: rgba(255, 214, 227, 0.7);
+}
+
+
+/* ------------------------------------------------
+   11. RESPONSIVE
+   ------------------------------------------------ */
 @media (max-width: 576px) {
   .hero-section {
     min-height: 100svh;
     padding: 80px 0 60px;
-    /* background-attachment: fixed bermasalah di iOS Safari, ubah ke scroll di mobile */
     background-attachment: scroll;
   }
 
@@ -579,7 +821,6 @@ body {
     font-size: 3rem;
   }
 
-  /* Tombol hero di mobile: full lebar, susun ke bawah */
   .btn-hero,
   .btn-hero-outline {
     display: block;
@@ -591,7 +832,6 @@ body {
     margin-right: 0 !important;
   }
 
-  /* Gambar card sedikit lebih pendek di HP kecil */
   .card-img-wrapper {
     height: 190px;
   }
@@ -599,21 +839,23 @@ body {
   .form-card {
     padding: 24px 20px !important;
   }
+
+  /* Login box di mobile */
+  .login-box {
+    padding: 32px 24px;
+  }
 }
 
-/* Tablet: 576px – 768px */
 @media (min-width: 576px) and (max-width: 768px) {
   .hero-title {
     font-size: 2rem;
   }
 
-  /* Pada tablet (2 kolom), gambar bisa sedikit lebih pendek */
   .card-img-wrapper {
     height: 200px;
   }
 }
 
-/* Layar besar: > 992px – gambar bisa lebih tinggi */
 @media (min-width: 992px) {
   .card-img-wrapper {
     height: 230px;
