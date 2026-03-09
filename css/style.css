@@ -85,6 +85,17 @@ body {
   background-color: rgba(255, 214, 227, 0.15);
 }
 
+/* Badge nama user yang sudah login di navbar */
+.navbar-user-badge {
+  color: #FFD6E3;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  background-color: rgba(255, 214, 227, 0.15);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 214, 227, 0.3);
+}
+
 
 /* ------------------------------------------------
    4. HERO SECTION
@@ -594,9 +605,210 @@ body.dark-mode .card-img-wrapper {
   background-color: #3a1520;
 }
 
+body.dark-mode .navbar-user-badge {
+  color: #F4A7B9;
+  background-color: rgba(244, 167, 185, 0.12);
+  border-color: rgba(244, 167, 185, 0.25);
+}
+
+
+/* ================================================
+   10. LOGIN PAGE
+   ================================================ */
+body.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3D1A24 0%, #6B2D40 40%, #C2607A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Efek dekoratif background berupa lingkaran blur */
+body.login-page::before {
+  content: '';
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(244, 167, 185, 0.08);
+  top: -150px;
+  right: -100px;
+  pointer-events: none;
+}
+
+body.login-page::after {
+  content: '';
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: rgba(255, 214, 227, 0.06);
+  bottom: -100px;
+  left: -80px;
+  pointer-events: none;
+}
+
+/* Kotak form login */
+.login-box {
+  background-color: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 214, 227, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+/* Ikon gem di halaman login */
+.login-gem-icon {
+  font-size: 3rem;
+  color: #FFD6E3;
+  filter: drop-shadow(0 0 16px rgba(255, 214, 227, 0.5));
+}
+
+/* Judul halaman login */
+.login-heading {
+  color: #FFD6E3;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* Subjudul halaman login */
+.login-sub {
+  color: rgba(255, 214, 227, 0.65);
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* Label field form di halaman login */
+body.login-page .form-label {
+  color: rgba(255, 214, 227, 0.85);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Input field di halaman login */
+body.login-page .form-control {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 214, 227, 0.25);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+body.login-page .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #FFD6E3;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 214, 227, 0.18);
+  outline: none;
+}
+
+body.login-page .form-control::placeholder {
+  color: rgba(255, 214, 227, 0.4);
+}
+
+/* Tombol toggle show/hide password */
+.btn-toggle-pass {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 214, 227, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.btn-toggle-pass:hover {
+  color: #FFD6E3;
+}
+
+/* Checkbox Remember Me */
+body.login-page .form-check-label {
+  color: rgba(255, 214, 227, 0.75);
+  font-size: 0.88rem;
+}
+
+body.login-page .form-check-input {
+  border-color: rgba(255, 214, 227, 0.4);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+body.login-page .form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Tombol Login */
+.btn-login {
+  background: linear-gradient(135deg, #B5435F, var(--color-primary));
+  color: var(--color-white);
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: var(--transition);
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #9E3050, #B5435F);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(194, 96, 122, 0.45);
+  color: var(--color-white);
+}
+
+/* Tombol Kembali */
+.btn-back {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 214, 227, 0.85);
+  border: 1.5px solid rgba(255, 214, 227, 0.2);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 214, 227, 0.4);
+  color: #FFD6E3;
+  transform: translateY(-1px);
+}
+
+/* Info akun demo di bawah form */
+.login-demo-info {
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 214, 227, 0.45);
+  border-top: 1px solid rgba(255, 214, 227, 0.1);
+  padding-top: 16px;
+}
+
+.login-demo-info strong {
+  color: rgba(255, 214, 227, 0.7);
+}
+
 
 /* ------------------------------------------------
-   10. RESPONSIVE
+   11. RESPONSIVE
    ------------------------------------------------ */
 @media (max-width: 576px) {
   .hero-section {
@@ -626,6 +838,11 @@ body.dark-mode .card-img-wrapper {
 
   .form-card {
     padding: 24px 20px !important;
+  }
+
+  /* Login box di mobile */
+  .login-box {
+    padding: 32px 24px;
   }
 }
 

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -28,7 +31,7 @@
   <!-- =============================================
        NAVBAR
        Berisi: Brand, menu navigasi, tombol Wishlist,
-       dan tombol Dark Mode.
+       tombol Dark Mode, dan tombol Login/Logout.
        ============================================= -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNavbar">
     <div class="container">
@@ -76,8 +79,8 @@
 
         </ul>
 
-        <!-- Tombol Wishlist & Dark Mode di sisi kanan navbar -->
-        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+        <!-- Tombol Wishlist, Dark Mode, dan Login/Logout di sisi kanan navbar -->
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 flex-wrap">
 
           <!-- Tombol Wishlist: membuka modal -->
           <button
@@ -93,6 +96,23 @@
           <button id="btn-theme" class="btn btn-outline-light btn-sm">
             <i class="bi bi-moon-fill me-1"></i>Mode Gelap
           </button>
+
+          <!-- Kondisi Login/Logout menggunakan PHP Session -->
+          <?php if (isset($_SESSION['user'])): ?>
+            <!-- Sudah login: tampilkan nama user dan tombol Logout -->
+            <span class="navbar-user-badge">
+              <i class="bi bi-person-circle me-1"></i>
+              <?php echo htmlspecialchars($_SESSION['user']); ?>
+            </span>
+            <a href="controller/logout.php" class="btn btn-danger btn-sm">
+              <i class="bi bi-box-arrow-right me-1"></i>Logout
+            </a>
+          <?php else: ?>
+            <!-- Belum login: tampilkan tombol Login -->
+            <a href="login.php" class="btn btn-warning btn-sm fw-semibold">
+              <i class="bi bi-box-arrow-in-right me-1"></i>Login
+            </a>
+          <?php endif; ?>
 
         </div>
       </div>
@@ -183,7 +203,7 @@
         <p class="section-subtitle">Daftar produk pilihan yang tersedia di toko kami</p>
       </div>
 
-      <div class="row g-4">
+      <div class="row g-4" id="container-produk">
 
         <!-- ============================
              CARD 1: Anting Mutiara
@@ -201,7 +221,6 @@
             </div>
 
             <div class="card-body d-flex flex-column">
-              <!-- class="product-name" → dibaca oleh script.js untuk nama produk -->
               <h5 class="product-name">Anting Mutiara Elegan</h5>
               <p class="product-desc text-muted small">
                 Anting berbahan mutiara asli dengan desain klasik, cocok untuk
@@ -211,7 +230,6 @@
               <div class="product-meta mt-auto">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="product-price">Rp 185.000</span>
-                  <!-- class="stok-text" → diubah isinya oleh script.js saat tombol Beli diklik -->
                   <span class="stok-text">
                     <i class="bi bi-archive me-1"></i>Stok: 42
                   </span>
@@ -224,13 +242,10 @@
                   <i class="bi bi-star-half"></i>
                   <span class="ms-1 small text-muted">(4.5)</span>
                 </div>
-                <!-- Tombol Beli & Wishlist -->
                 <div class="d-flex gap-2">
-                  <!-- class="btn-beli" → diklik untuk kurangi stok (script.js) -->
                   <button class="btn btn-primary btn-sm btn-beli w-50">
                     <i class="bi bi-cart-plus me-1"></i>Beli
                   </button>
-                  <!-- class="btn-wishlist" → diklik untuk tambah ke wishlist (script.js) -->
                   <button class="btn btn-outline-danger btn-sm btn-wishlist w-50">
                     <i class="bi bi-heart me-1"></i>Wishlist
                   </button>
@@ -401,7 +416,8 @@
 
   <!-- =============================================
        SECTION FORM INPUT DATA AKSESORIS
-       Validasi Bootstrap + pesan sukses via DOM (script.js)
+       Hanya tampil jika sudah login (PHP Session).
+       Jika belum login, tampilkan pesan dengan link login.
        ============================================= -->
   <section id="kelola" class="form-section py-5">
     <div class="container">
@@ -411,6 +427,8 @@
         <p class="section-subtitle">Tambahkan produk aksesoris baru ke dalam sistem</p>
       </div>
 
+      <?php if (isset($_SESSION['user'])): ?>
+      <!-- Sudah login: tampilkan form tambah produk -->
       <div class="row justify-content-center">
         <div class="col-12 col-lg-7">
           <div class="form-card card p-4 p-md-5">
@@ -527,6 +545,27 @@
           </div>
         </div>
       </div>
+
+      <?php else: ?>
+      <!-- Belum login: tampilkan pesan dan tombol login -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+          <div class="form-card card p-4 p-md-5 text-center">
+            <div class="mb-3">
+              <i class="bi bi-lock-fill" style="font-size: 3rem; color: #C2607A; opacity: 0.6;"></i>
+            </div>
+            <h5 class="form-card-title mb-3">Akses Terbatas</h5>
+            <p class="text-muted mb-4">
+              🔒 Silakan <a href="login.php" style="color: #C2607A; font-weight: 600;">login</a>
+              terlebih dahulu untuk menambahkan produk aksesoris baru ke dalam sistem.
+            </p>
+            <a href="login.php" class="btn btn-submit">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Login Sekarang
+            </a>
+          </div>
+        </div>
+      </div>
+      <?php endif; ?>
 
     </div>
   </section>
