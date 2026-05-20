@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -24,7 +21,7 @@ session_start();
   />
 
   <!-- CSS Eksternal -->
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
 <body>
 
@@ -97,22 +94,22 @@ session_start();
             <i class="bi bi-moon-fill me-1"></i>Mode Gelap
           </button>
 
-          <!-- Kondisi Login/Logout menggunakan PHP Session -->
-          <?php if (isset($_SESSION['user'])): ?>
+          <!-- Kondisi Login/Logout menggunakan Laravel Session & Blade -->
+          @if(session()->has('user'))
             <!-- Sudah login: tampilkan nama user dan tombol Logout -->
             <span class="navbar-user-badge">
               <i class="bi bi-person-circle me-1"></i>
-              <?php echo htmlspecialchars($_SESSION['user']); ?>
+              {{ session('user') }}
             </span>
-            <a href="controller/logout.php" class="btn btn-danger btn-sm">
+            <a href="{{ route('logout') }}" class="btn btn-danger btn-sm">
               <i class="bi bi-box-arrow-right me-1"></i>Logout
             </a>
-          <?php else: ?>
+          @else
             <!-- Belum login: tampilkan tombol Login -->
-            <a href="login.php" class="btn btn-warning btn-sm fw-semibold">
+            <a href="{{ route('login') }}" class="btn btn-warning btn-sm fw-semibold">
               <i class="bi bi-box-arrow-in-right me-1"></i>Login
             </a>
-          <?php endif; ?>
+          @endif
 
         </div>
       </div>
@@ -213,7 +210,7 @@ session_start();
 
             <div class="card-img-wrapper">
               <img
-                src="assets/antingmutiara.jpg"
+                src="{{ asset('assets/antingmutiara.jpg') }}"
                 alt="Anting Mutiara Elegan"
                 class="img-fluid product-img"
               />
@@ -266,7 +263,7 @@ session_start();
 
             <div class="card-img-wrapper">
               <img
-                src="assets/cincin.jpg"
+                src="{{ asset('assets/cincin.jpg') }}"
                 alt="Cincin Perak Minimalis"
                 class="img-fluid product-img"
               />
@@ -319,7 +316,7 @@ session_start();
 
             <div class="card-img-wrapper">
               <img
-                src="assets/gelang.jpg"
+                src="{{ asset('assets/gelang.jpg') }}"
                 alt="Gelang Emas Lapis"
                 class="img-fluid product-img"
               />
@@ -416,7 +413,7 @@ session_start();
 
   <!-- =============================================
        SECTION FORM INPUT DATA AKSESORIS
-       Hanya tampil jika sudah login (PHP Session).
+       Hanya tampil jika sudah login (Laravel Session).
        Jika belum login, tampilkan pesan dengan link login.
        ============================================= -->
   <section id="kelola" class="form-section py-5">
@@ -427,7 +424,7 @@ session_start();
         <p class="section-subtitle">Tambahkan produk aksesoris baru ke dalam sistem</p>
       </div>
 
-      <?php if (isset($_SESSION['user'])): ?>
+      @if(session()->has('user'))
       <!-- Sudah login: tampilkan form tambah produk -->
       <div class="row justify-content-center">
         <div class="col-12 col-lg-7">
@@ -546,7 +543,7 @@ session_start();
         </div>
       </div>
 
-      <?php else: ?>
+      @else
       <!-- Belum login: tampilkan pesan dan tombol login -->
       <div class="row justify-content-center">
         <div class="col-12 col-lg-6">
@@ -556,16 +553,16 @@ session_start();
             </div>
             <h5 class="form-card-title mb-3">Akses Terbatas</h5>
             <p class="text-muted mb-4">
-              🔒 Silakan <a href="login.php" style="color: #C2607A; font-weight: 600;">login</a>
+              🔒 Silakan <a href="{{ route('login') }}" style="color: #C2607A; font-weight: 600;">login</a>
               terlebih dahulu untuk menambahkan produk aksesoris baru ke dalam sistem.
             </p>
-            <a href="login.php" class="btn btn-submit">
+            <a href="{{ route('login') }}" class="btn btn-submit">
               <i class="bi bi-box-arrow-in-right me-2"></i>Login Sekarang
             </a>
           </div>
         </div>
       </div>
-      <?php endif; ?>
+      @endif
 
     </div>
   </section>
@@ -592,8 +589,8 @@ session_start();
   <!-- Bootstrap 5 JS Bundle (WAJIB di atas script.js agar modal bisa bekerja) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Script utama kita (dark mode, beli, wishlist, validasi form) -->
-  <script src="js/script.js"></script>
+  <!-- Script utama (dark mode, beli, wishlist, validasi form) -->
+  <script src="{{ asset('js/script.js') }}"></script>
 
 </body>
 </html>

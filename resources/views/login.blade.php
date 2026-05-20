@@ -1,12 +1,3 @@
-<?php
-session_start();
-
-// Kalau sudah login, langsung redirect ke index
-if (isset($_SESSION['user'])) {
-    header("Location: index.php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,7 +18,7 @@ if (isset($_SESSION['user'])) {
   />
 
   <!-- CSS Eksternal (termasuk style login-page) -->
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
 <body class="login-page">
 
@@ -40,16 +31,17 @@ if (isset($_SESSION['user'])) {
       <p class="login-sub">Silakan login untuk melanjutkan</p>
     </div>
 
-    <!-- Alert Error: muncul jika login gagal (?error=1) -->
-    <?php if (isset($_GET['error'])): ?>
+    <!-- Alert Error: muncul jika login gagal -->
+    @if(session('error'))
       <div class="alert alert-danger py-2 px-3 mb-3" style="font-size: 14px; border-radius: 8px;">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        Username atau password salah. Silakan coba lagi.
+        {{ session('error') }}
       </div>
-    <?php endif; ?>
+    @endif
 
     <!-- Form Login -->
-    <form method="POST" action="controller/proses_login.php">
+    <form method="POST" action="{{ route('login.proses') }}">
+      @csrf
 
       <!-- Field Username -->
       <div class="mb-3">
@@ -62,7 +54,7 @@ if (isset($_SESSION['user'])) {
           name="username"
           class="form-control"
           placeholder="Masukkan username"
-          value="<?php echo isset($_COOKIE['username']) ? htmlspecialchars($_COOKIE['username']) : ''; ?>"
+          value="{{ request()->cookie('username') ?? '' }}"
           required
         />
       </div>
@@ -100,7 +92,7 @@ if (isset($_SESSION['user'])) {
           type="checkbox"
           id="remember"
           name="remember"
-          <?php echo isset($_COOKIE['username']) ? 'checked' : ''; ?>
+          {{ request()->cookie('username') ? 'checked' : '' }}
         />
         <label class="form-check-label" for="remember">Ingat saya</label>
       </div>
@@ -111,7 +103,7 @@ if (isset($_SESSION['user'])) {
       </button>
 
       <!-- Tombol Kembali ke Beranda -->
-      <a href="index.php" class="btn btn-back w-100">
+      <a href="{{ route('home') }}" class="btn btn-back w-100">
         <i class="bi bi-arrow-left me-2"></i>Kembali ke Beranda
       </a>
 
